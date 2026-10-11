@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+# Composer dist archives carry src/, composer.json, README.md, CHANGELOG.md and LICENSE only.
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.github export-ignore
+/docs export-ignore
+/tests export-ignore
+/phpstan.neon.dist export-ignore
+/phpunit.xml.dist export-ignore
+/renovate.json export-ignore

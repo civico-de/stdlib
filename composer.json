@@ -1,0 +1,37 @@
+{
+  "name": "civico-de/stdlib",
+  "description": "Small stateless helpers for CiviCRM extensions, meant to be bundled under each extension's own namespace.",
+  "type": "library",
+  "license": "AGPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "civico GmbH",
+      "homepage": "https://civico.de"
+    }
+  ],
+  "require": {
+    "php": ">=8.2"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/phpunit": "^11.5 || ^12.5 || ^13.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Civico\\Stdlib\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Civico\\Stdlib\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "analyse": "phpstan analyse --no-progress",
+    "test": "phpunit"
+  }
+}
