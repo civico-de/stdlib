@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2 (2026-11-04)
+
+- `Expect::int` accepts zero-padded integer strings such as `'007'`.
+
 ## 0.1.1 (2026-11-04)
 
 - `Expect` with `int`, `str`, `optStr`, `bool`, `optFloat`, `row` and `timestamp`.

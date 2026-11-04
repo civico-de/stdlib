@@ -94,7 +94,7 @@ names the type but never the value, which may be personal data.
 
 | Method | Accepts |
 |---|---|
-| `int($value)` | ints, strings holding an integer (`'1.5'` throws) |
+| `int($value)` | ints, decimal integer strings within the int range (`'007'` → 7, `'1.5'` throws) |
 | `str($value)` / `optStr($value)` | strings, ints, finite floats; `optStr` passes `null` |
 | `bool($value)` | bools, `1`/`0`, `'1'`/`'0'`, `''` (`'false'` throws) |
 | `optFloat($value)` | `null`, ints, finite floats, numeric strings |

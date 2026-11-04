@@ -12,13 +12,16 @@ namespace Civico\Stdlib;
 final class Expect {
 
   /**
-   * Ints and strings holding an integer ('42', '-7'); '1.5' and floats throw.
+   * Ints and decimal integer strings ('42', '-7', '+5', '007', ' 5') within
+   * the int range; '1.5', '1e3' and floats throw.
    */
   public static function int(mixed $value): int {
     if (is_int($value)) {
       return $value;
     }
-    $int = is_string($value) ? filter_var($value, FILTER_VALIDATE_INT) : FALSE;
+    // FILTER_VALIDATE_INT rejects leading zeros; it accepts surrounding whitespace.
+    $digits = is_string($value) && preg_match('/^\s*([+-]?)0*(\d+)\s*$/D', $value, $match) === 1 ? $match[1] . $match[2] : '';
+    $int = filter_var($digits, FILTER_VALIDATE_INT);
     return is_int($int) ? $int : throw self::unexpected('an integer', $value);
   }
 

@@ -17,6 +17,12 @@ final class ExpectTest extends TestCase {
     yield 'int' => [42, 42];
     yield 'numeric string' => ['42', 42];
     yield 'negative string' => ['-7', -7];
+    yield 'zero-padded string' => ['007', 7];
+    yield 'zero-padded negative' => ['-01', -1];
+    yield 'zeros' => ['000', 0];
+    yield 'surrounding space' => [' 5 ', 5];
+    yield 'plus sign' => ['+05', 5];
+    yield 'largest int' => [(string) PHP_INT_MAX, PHP_INT_MAX];
   }
 
   #[DataProvider('ints')]
@@ -34,6 +40,8 @@ final class ExpectTest extends TestCase {
     yield 'bool' => [TRUE];
     yield 'empty string' => [''];
     yield 'word' => ['abc'];
+    yield 'exponent' => ['1e3'];
+    yield 'beyond the int range' => ['9223372036854775808'];
     yield 'array' => [[1]];
   }
 
