@@ -71,6 +71,7 @@ development as in production.
 | Class | Purpose |
 |---|---|
 | `Cast` | Coerces values of unknown type: settings, JSON, DB results, rule configuration. |
+| `Expect` | Reads values that must have a type, and throws when they do not. |
 
 `toString`, `toInt` and `toFloat` return the given default for anything they cannot
 convert. None of them turns an array into `"Array"`:
@@ -86,6 +87,19 @@ convert. None of them turns an array into `"Array"`:
 `toInt` range-checks floats, decimal strings and strings beyond the int range
 as floats: within 1024 of `PHP_INT_MIN` or `PHP_INT_MAX` they can round across it.
 `namedOnly` also drops keys like `'5'`, which PHP stores as integers.
+
+`Expect` is for values that have no sensible default, such as an ID or a
+setting: anything it cannot read throws `UnexpectedValueException`. The message
+names the type but never the value, which may be personal data.
+
+| Method | Accepts |
+|---|---|
+| `int($value)` | ints, strings holding an integer (`'1.5'` throws) |
+| `str($value)` / `optStr($value)` | strings, ints, finite floats; `optStr` passes `null` |
+| `bool($value)` | bools, `1`/`0`, `'1'`/`'0'`, `''` (`'false'` throws) |
+| `optFloat($value)` | `null`, ints, finite floats, numeric strings |
+| `row($value)` | arrays with string keys only, such as an APIv4 row |
+| `timestamp($value)` | a date string `strtotime()` understands, as a Unix timestamp |
 
 ## Rules for new helpers
 
