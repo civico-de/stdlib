@@ -36,6 +36,60 @@ final class CastTest extends TestCase {
   }
 
   /**
+   * @return iterable<string, array{mixed, ?string}>
+   */
+  public static function stringsOrNull(): iterable {
+    yield 'string' => ['abc', 'abc'];
+    yield 'zero' => [0, '0'];
+    yield 'zero string' => ['0', '0'];
+    yield 'whitespace' => [' ', ' '];
+    yield 'empty string' => ['', NULL];
+    yield 'null' => [NULL, NULL];
+    yield 'false' => [FALSE, NULL];
+    yield 'array' => [['a'], NULL];
+    yield 'NaN' => [NAN, NULL];
+  }
+
+  #[DataProvider('stringsOrNull')]
+  public function testToStringOrNull(mixed $value, ?string $expected): void {
+    self::assertSame($expected, Cast::toStringOrNull($value));
+  }
+
+  /**
+   * @return iterable<string, array{mixed, ?bool}>
+   */
+  public static function bools(): iterable {
+    yield 'true' => [TRUE, TRUE];
+    yield 'false' => [FALSE, FALSE];
+    yield 'one' => [1, TRUE];
+    yield 'zero' => [0, FALSE];
+    yield 'one string' => ['1', TRUE];
+    yield 'zero string' => ['0', FALSE];
+    yield 'empty string' => ['', FALSE];
+    yield 'TRUE word' => ['TRUE', TRUE];
+    yield 'yes' => ['Yes', TRUE];
+    yield 'on' => ['on', TRUE];
+    yield 'false word' => ['false', FALSE];
+    yield 'no' => ['NO', FALSE];
+    yield 'off' => ['off', FALSE];
+    yield 'two' => [2, NULL];
+    yield 'float one' => [1.0, NULL];
+    yield 'padded' => [' true', NULL];
+    yield 'other word' => ['maybe', NULL];
+    yield 'null' => [NULL, NULL];
+    yield 'array' => [[TRUE], NULL];
+  }
+
+  /**
+   * NULL as the expectation means the value falls back to the default.
+   */
+  #[DataProvider('bools')]
+  public function testToBool(mixed $value, ?bool $expected): void {
+    self::assertSame($expected ?? FALSE, Cast::toBool($value));
+    self::assertSame($expected ?? TRUE, Cast::toBool($value, TRUE));
+  }
+
+  /**
    * @return iterable<string, array{bool|float|int|string, string}>
    */
   public static function storedStrings(): iterable {

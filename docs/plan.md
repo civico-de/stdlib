@@ -54,6 +54,8 @@ results, whose PHP type is not guaranteed.
 | `toString(mixed, string $default = '')` | scalars except NaN, cast as PHP does (`true` → `'1'`) | `$default` |
 | `toInt(mixed, int $default = 0)` | ints, bools, numeric strings and floats within the int range (truncated) | `$default` |
 | `toFloat(mixed, float $default = 0.0)` | ints, floats, numeric strings, bools | `$default` |
+| `toStringOrNull(mixed)` | what `toString` returns; `''` counts as absent | `null` |
+| `toBool(mixed, bool $default = false)` | bools, `1`/`0`, `'1'`/`'0'`/`''`, `true`/`yes`/`on`, `false`/`no`/`off` in any case | `$default` |
 | `toStoredString(bool\|float\|int\|string)` | the value for a DB column (`false` → `'0'`) | NaN throws `ValueError` |
 | `namedOnly(array)` | keeps the string keys | integer keys dropped, also `'5'` |
 
@@ -64,9 +66,8 @@ The existing copies disagree on edge cases:
 The table above is the reference. An extension that moves to the library runs
 its own test suite against it before switching.
 
-Nullable variants (`toStringOrNull`, `toIntOrNull`) and `toBool` come in a
-later release, together with the first extension that needs them. The existing
-copies also disagree there: one copy treats `''` as absent, another does not.
+`toIntOrNull` comes in a later release, together with the first extension
+that needs it.
 
 ## How an extension consumes the library
 

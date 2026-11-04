@@ -72,8 +72,9 @@ development as in production.
 |---|---|
 | `Cast` | Coerces values of unknown type: settings, JSON, DB results, rule configuration. |
 | `Expect` | Reads values that must have a type, and throws when they do not. |
+| `Email` | `key($value)`: an address trimmed and ASCII-lowercased, for matching two notations. |
 
-`toString`, `toInt` and `toFloat` return the given default for anything they cannot
+`toString`, `toInt`, `toFloat` and `toBool` return the given default for anything they cannot
 convert. None of them turns an array into `"Array"`:
 
 | Method | Converts | Otherwise |
@@ -81,6 +82,8 @@ convert. None of them turns an array into `"Array"`:
 | `toString($value, $default = '')` | scalars except NaN, as PHP casts them (`true` → `'1'`) | `$default` |
 | `toInt($value, $default = 0)` | ints, bools, numeric strings and floats within the int range (truncated) | `$default` |
 | `toFloat($value, $default = 0.0)` | ints, floats, bools, numeric strings | `$default` |
+| `toStringOrNull($value)` | what `toString` returns, `null` instead of `''` | `null` |
+| `toBool($value, $default = false)` | bools, `1`/`0`, `'1'`/`'0'`/`''` and `true`/`yes`/`on`, `false`/`no`/`off` in any case | `$default` |
 | `toStoredString($scalar)` | the value for a database column (`false` → `'0'`) | NaN throws `ValueError` |
 | `namedOnly($array)` | keeps entries with string keys | — |
 

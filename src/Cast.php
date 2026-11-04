@@ -20,6 +20,28 @@ final class Cast {
   }
 
   /**
+   * What toString() returns, with NULL in place of '': an empty field and a
+   * missing one read the same.
+   */
+  public static function toStringOrNull(mixed $value): ?string {
+    $string = self::toString($value);
+    return $string === '' ? NULL : $string;
+  }
+
+  /**
+   * Bools, 1/0 and the strings '1', 'true', 'yes', 'on' and '0', 'false',
+   * 'no', 'off', '' in any case; anything else is the default.
+   */
+  public static function toBool(mixed $value, bool $default = FALSE): bool {
+    $word = is_string($value) ? strtolower($value) : $value;
+    return match ($word) {
+      TRUE, 1, '1', 'true', 'yes', 'on' => TRUE,
+      FALSE, 0, '0', 'false', 'no', 'off', '' => FALSE,
+      default => $default,
+    };
+  }
+
+  /**
    * A scalar for a database column: booleans become '1'/'0', not '', other
    * scalars what PHP casts them to. NaN has no stored form.
    *
